@@ -165,12 +165,11 @@ class App extends Component {
 
     return (
       <div className="App-wrapper">
+        <h2>Identify elements of an argument</h2>
         <div className='qualifiers-container'>
           { this.renderQualifiers(qualifiers) }
         </div>
-        <div>
-          <h2>Argument</h2>
-        </div>
+        <h2>Argument</h2>
         <div className="qualifiers-container">
           { this.renderArg(currentArg) }
         </div>
