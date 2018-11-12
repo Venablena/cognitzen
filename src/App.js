@@ -9,7 +9,7 @@ import Argument from './components/Argument';
 import Data from './data.json';
 
 // TODO:
-// Add warnings when argument is completed and when ALL arguments have been complete
+// Add warnings when argument is completed
 
 class App extends Component {
   state = {
@@ -23,6 +23,7 @@ class App extends Component {
     currentArgId: '',
     wrongQualifier: '',
     solvedArgs: [],
+    alertState: 'is-hidden',
   };
 
   handleDragStart = (e, content, type) => {
@@ -109,7 +110,23 @@ class App extends Component {
     };
   }
 
+  showAlert = () => {
+    const { alertState } = this.state;
+    this.setState({
+      ...this.state,
+      alertState: '',
+    })
+
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        alertState: 'is-hidden',
+      })
+    }, 800)
+  };
+
   completeArgument = (argId) => {
+    this.showAlert();
     const { args, solvedArgs } = this.state;
     let updatedArgs = solvedArgs.concat([argId]);
     pullAt(args, updatedArgs)
@@ -153,14 +170,19 @@ class App extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { currentArg, currentArgId } = this.state;
     if(prevState.currentArg !== currentArg) {
-      if(isEmpty(currentArg)) return this.completeArgument(currentArgId);
+      if(isEmpty(currentArg)) {
+        setTimeout(() => {
+          return this.completeArgument(currentArgId);
+        }, 200)
+      }
     }
   };
 
   render() {
     const {
       qualifiers,
-      currentArg
+      currentArg,
+      alertState,
     } = this.state;
 
     return (
@@ -172,6 +194,9 @@ class App extends Component {
         <h2>Argument</h2>
         <div className="qualifiers-container">
           { this.renderArg(currentArg) }
+        </div>
+        <div className={ `alert ${ alertState }` }>
+          <h2>Correct!</h2>
         </div>
       </div>
     );
