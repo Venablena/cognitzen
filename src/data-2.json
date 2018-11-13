@@ -3,7 +3,7 @@
 	"content": "Death penalty should be abolished.",
 	"contentions": {
 		"1": {
-			"content": "It is Unconstitutional.",
+			"content": "Death Penalty is Unconstitutional.",
 			"arguments": {
 				"1": {
 					"content": "Unusual punishment",
@@ -41,23 +41,23 @@
 						"Data": "Each group has limited number of staff, and time.",
 						"Warrant": "Like any person or worker, they can only do so much work per day."
 					}
-				}
-			},
-			"2": {
-				"content": "Takes Time",
-				"parts": {
-					"Claim": "Legal resources on capital punishment cases take time.",
-					"Data": "Often, capital punishment cases are repeatedly accused of mistrial or are appealed.",
-					"Warrant": "Repeatedly trying a case takes work hours each time."
-				}
-			},
-			"3": {
-				"content": "Trades Off",
-				"parts": {
-					"Claim": "The legal resources spent on capital punishment cases clog up the legal system.",
-					"Data": "Courtrooms, public defense lawyers, judges all could be used for other cases.",
-					"Warrant": "The legal resources that goes to death penalty cases come at the cost of other court cases."
-				}
+				},
+        "2": {
+  				"content": "Takes Time",
+  				"parts": {
+  					"Claim": "Legal resources on capital punishment cases take time.",
+  					"Data": "Often, capital punishment cases are repeatedly accused of mistrial or are appealed.",
+  					"Warrant": "Repeatedly trying a case takes work hours each time."
+  				}
+  			},
+  			"3": {
+  				"content": "Trades Off",
+  				"parts": {
+  					"Claim": "The legal resources spent on capital punishment cases clog up the legal system.",
+  					"Data": "Courtrooms, public defense lawyers, judges all could be used for other cases.",
+  					"Warrant": "The legal resources that goes to death penalty cases come at the cost of other court cases."
+  				}
+  			}
 			}
 		},
 		"3": {

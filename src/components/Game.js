@@ -3,11 +3,12 @@ import shuffle from 'lodash/shuffle';
 import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
 import pullAt from 'lodash/pullAt';
+import Data from '../data-1.json';
 
 import Qualifier from './Qualifier';
 import Argument from './Argument';
-import Data from '../data-1.json';
 
+// TODO: refactor the Game component so that it can be used without randomizing the args
 class Game extends Component {
   state = {
     qualifiers: {
@@ -16,7 +17,7 @@ class Game extends Component {
       Warrant: '?',
     },
     args: Data,
-    currentArg: {},
+    currentArg: this.props.currentArg,
     currentArgId: '',
     wrongQualifier: '',
     solvedArgs: [],
@@ -151,19 +152,19 @@ class Game extends Component {
     });
   }
 
-  componentWillMount = () => {
-    let { solvedArgs, args } = this.state;
-    if( localStorage.getItem('CognitZen') ) {
-      solvedArgs = JSON.parse(localStorage.getItem('CognitZen'));
-    }
-    pullAt(args, solvedArgs)
-
-    this.setState({
-      ...this.state,
-      ...this.randomizeArgument(args),
-      solvedArgs,
-    })
-  };
+  // componentWillMount = () => {
+  //   let { solvedArgs, args } = this.state;
+  //   if( localStorage.getItem('CognitZen') ) {
+  //     solvedArgs = JSON.parse(localStorage.getItem('CognitZen'));
+  //   }
+  //   pullAt(args, solvedArgs)
+  //
+  //   this.setState({
+  //     ...this.state,
+  //     ...this.randomizeArgument(args),
+  //     solvedArgs,
+  //   })
+  // };
 
   componentDidUpdate = (prevProps, prevState) => {
     const { currentArg, currentArgId } = this.state;

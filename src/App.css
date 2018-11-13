@@ -1,4 +1,5 @@
 h2 {
+  background: black;
   color: white;
 }
 
@@ -15,6 +16,16 @@ h2 {
   display: flex;
   align-items: stretch;
   justify-content: center;
+}
+
+.contentions-container {
+  /* width: 40%; */
+  background-color: red;
+}
+
+.game-container {
+  text-align: center;
+  /* width: 60%; */
 }
 
 .argument,
