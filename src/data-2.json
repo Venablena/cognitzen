@@ -1,0 +1,93 @@
+{
+	"side": "affirmative",
+	"content": "Death penalty should be abolished.",
+	"contentions": {
+		"1": {
+			"content": "It is Unconstitutional.",
+			"arguments": {
+				"1": {
+					"content": "Unusual punishment",
+					"parts": {
+						"Claim": "The death sentence is an outdated punishment and should be seen as unusual.",
+						"Data": "According to the ACLU, it is a legal relic from when slavery, branding, and corporal punishments were common place.",
+						"Warrant": "The death penalties archaic legacy is as outdated as other kinds of punishment and should be removed."
+					}
+				},
+				"2": {
+					"content": "Cruel",
+					"parts": {
+						"Claim": "Death sentencing can be very painful, even with modern medicine.",
+						"Data": "A review of research concluded that: f a member of the execution team injects the drugs into a muscle instead of a vein, or if the needle becomes clogged, extreme pain can result",
+						"Warrant": "Extreme pain as a kind of punishment is cruel."
+					}
+				},
+				"3": {
+					"content": "Illegal",
+					"parts": {
+						"Claim": "Cruel and unusual punishments are illegal in the United States.",
+						"Data": "The 8th amendment states: 'Excessive bail shall not be required, nor excessive fines imposed, nor cruel and unusual punishments inflicted.'",
+						"Warrant": "The above two arguments prove that capital punishment is both cruel and unusual, so it should be illegal."
+					}
+				}
+			}
+		},
+		"2": {
+			"content": "Death Penalty is Wasteful",
+			"arguments": {
+				"1": {
+					"content": "Limited Work Hours",
+					"parts": {
+						"Claim": "Lawyers, courts, courtrooms, and judges are all limited resources.",
+						"Data": "Each group has limited number of staff, and time.",
+						"Warrant": "Like any person or worker, they can only do so much work per day."
+					}
+				}
+			},
+			"2": {
+				"content": "Takes Time",
+				"parts": {
+					"Claim": "Legal resources on capital punishment cases take time.",
+					"Data": "Often, capital punishment cases are repeatedly accused of mistrial or are appealed.",
+					"Warrant": "Repeatedly trying a case takes work hours each time."
+				}
+			},
+			"3": {
+				"content": "Trades Off",
+				"parts": {
+					"Claim": "The legal resources spent on capital punishment cases clog up the legal system.",
+					"Data": "Courtrooms, public defense lawyers, judges all could be used for other cases.",
+					"Warrant": "The legal resources that goes to death penalty cases come at the cost of other court cases."
+				}
+			}
+		},
+		"3": {
+			"content": "Death Penalty is Inaccurate and Unethical",
+			"arguments": {
+				"1": {
+					"content": "Inaccurate identification",
+					"parts": {
+						"Claim": "Not everyone who is sentenced to the death penalty is guilty.",
+						"Data": "A 2014 study by Proceedings of the National Academy of Sciences suggests 1 in 25 death sentence are wrong.",
+						"Warrant": "We can trust this study because it was published in a peer reviewed journal.,"
+					}
+				},
+				"2": {
+					"content": "Put to death",
+					"parts": {
+						"Claim": "Sometimes the death penalty is used on innocent people",
+						"Data": "If you are not guilty then you are innocent.",
+						"Warrant": "Given that not everyone who is sentenced is guilty, some innocent people must be killed."
+					}
+				},
+				"3": {
+					"content": "Is unethical",
+					"parts": {
+						"Claim": "Wrongly killing innocent people is unethical.",
+						"Data": "It harms people who didn’t do anything wrong.",
+						"Warrant": "Hurting people for no reason is unethical."
+					}
+				}
+			}
+		}
+	}
+}
