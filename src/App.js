@@ -8,8 +8,12 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        {/* <Game args={Data}/> */}
-        <Round2 />
+        {/*  <Round2 /> */}
+
+        <Game
+          // args={Data} 
+          round="1"
+        />
       </Fragment>
     );
   }

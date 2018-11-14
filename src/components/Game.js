@@ -16,6 +16,7 @@ class Game extends Component {
       Data: '?',
       Warrant: '?',
     },
+    round: this.props.round,
     args: Data,
     currentArg: this.props.currentArg,
     currentArgId: '',
@@ -24,6 +25,7 @@ class Game extends Component {
     alertState: 'is-hidden',
   };
 
+///GAME LOGIC, DON'T TOUCH////
   handleDragStart = (e, content, type) => {
     e.dataTransfer.setData("content", content);
     e.dataTransfer.setData("type", type);
@@ -102,14 +104,6 @@ class Game extends Component {
     })
   }
 
-  randomizeArgument = (args) => {
-    const randomIdx = Math.floor(Math.random() * args.length);
-    return {
-      'currentArg': args[randomIdx],
-      'currentArgId': randomIdx,
-    };
-  }
-
   showAlert = () => {
     this.setState({
       ...this.state,
@@ -124,26 +118,56 @@ class Game extends Component {
     }, 800)
   };
 
+  ////GAME LOGIC OVER /////
+
+  //When argument is completed, add it to solved args, remove it from
+  //(unsolved) args and move to next arg with the new unsolved & solved args
   completeArgument = (argId) => {
     this.showAlert();
     const { args, solvedArgs } = this.state;
     let updatedArgs = solvedArgs.concat([argId]);
+    //BETTER: remove argId from args..?:
+    //delete args[argId]
     pullAt(args, updatedArgs)
     //If all the arguments have been solved, empty them from localStorage and state
-    if(args.length) {
-      localStorage.setItem(
-        'CognitZen',
-        JSON.stringify(updatedArgs)
-      );
-    } else {
-      localStorage.removeItem('CognitZen');
-      updatedArgs = [];
-    }
+    return this.moveToNextArg(args, updatedArgs);
+  }
 
-    this.setState({
+  moveToNextArg = (allArgs, solvedArgs) => {
+    const { round } = this.state;
+
+    if(allArgs.length) {
+      if(round === "1") {
+        localStorage.setItem(
+          'CognitZen',
+          JSON.stringify(solvedArgs)
+        );
+        return this.resetStateForNextArg(allArgs, solvedArgs)
+      }
+      if(round === "2") {
+        //add arg to localStorage
+        //make it visible in the contention review
+        //move on to the next arg
+      }
+    } else {
+      if(round === "1") {
+        localStorage.removeItem('CognitZen');
+        solvedArgs = [];
+        return this.resetStateForNextArg(allArgs, solvedArgs)
+      }
+      if(round === "2") {
+        //add contention to localStorage
+        //make it visible in the round2 container
+        //move on to the next contention (reset args & currentArg)
+      }
+    }
+  }
+
+  resetStateForNextArg = (unsolvedArgs, solvedArgs) => {
+    return this.setState({
       ...this.state,
-      solvedArgs: updatedArgs,
-      ...this.randomizeArgument(args),
+      ...this.randomizeArgument(unsolvedArgs),
+      solvedArgs,
       qualifiers: {
         Claim: '?',
         Data: '?',
@@ -152,19 +176,41 @@ class Game extends Component {
     });
   }
 
-  // componentWillMount = () => {
-  //   let { solvedArgs, args } = this.state;
-  //   if( localStorage.getItem('CognitZen') ) {
-  //     solvedArgs = JSON.parse(localStorage.getItem('CognitZen'));
-  //   }
-  //   pullAt(args, solvedArgs)
-  //
-  //   this.setState({
-  //     ...this.state,
-  //     ...this.randomizeArgument(args),
-  //     solvedArgs,
-  //   })
-  // };
+  randomizeArgument = (args) => {
+    const randomIdx = Math.floor(Math.random() * args.length);
+    return {
+      'currentArg': args[randomIdx],
+      'currentArgId': randomIdx,
+    };
+  }
+
+  checkLocalStorage = () => {
+    let { solvedArgs, args } = this.state;
+    if( localStorage.getItem('CognitZen') ) {
+      solvedArgs = JSON.parse(localStorage.getItem('CognitZen'));
+    }
+    pullAt(args, solvedArgs);
+    return args;
+  }
+
+  componentWillMount = () => {
+    let { round, solvedArgs, args } = this.state;
+    if(round === "1") {
+      //this.checkLocalStorage()
+      if( localStorage.getItem('CognitZen') ) {
+        solvedArgs = JSON.parse(localStorage.getItem('CognitZen'));
+      }
+      pullAt(args, solvedArgs);
+      return this.setState({
+        ...this.state,
+        ...this.randomizeArgument(args),
+        solvedArgs,
+      })
+    }
+    if(round === "2") {
+
+    }
+  };
 
   componentDidUpdate = (prevProps, prevState) => {
     const { currentArg, currentArgId } = this.state;

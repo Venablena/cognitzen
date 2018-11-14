@@ -28,6 +28,7 @@ class Round2 extends Component {
           {
             <Game
               currentArg={ args.parts }
+              round= "2"
             />
           }
         </div>
