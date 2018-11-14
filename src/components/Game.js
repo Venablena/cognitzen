@@ -129,29 +129,27 @@ class Game extends Component {
     //BETTER: remove argId from args..?:
     //delete args[argId]
     pullAt(args, updatedArgs)
-    //If all the arguments have been solved, empty them from localStorage and state
     return this.moveToNextArg(args, updatedArgs);
   }
 
   moveToNextArg = (allArgs, solvedArgs) => {
     const { round } = this.state;
-
+    //If there are unsolved args left
     if(allArgs.length) {
-      if(round === "1") {
-        localStorage.setItem(
-          'CognitZen',
-          JSON.stringify(solvedArgs)
-        );
-        return this.resetStateForNextArg(allArgs, solvedArgs)
-      }
+      //add the solved arg to localStorage...
+      localStorage.setItem(
+        `CognitZen-${ round }`,
+        JSON.stringify(solvedArgs)
+      );
+
       if(round === "2") {
-        //add arg to localStorage
         //make it visible in the contention review
-        //move on to the next arg
       }
+      //...and refresh the state
+      return this.resetStateForNextArg(allArgs, solvedArgs);
     } else {
       if(round === "1") {
-        localStorage.removeItem('CognitZen');
+        localStorage.removeItem(`CognitZen-${ round }`);
         solvedArgs = [];
         return this.resetStateForNextArg(allArgs, solvedArgs)
       }
@@ -164,9 +162,13 @@ class Game extends Component {
   }
 
   resetStateForNextArg = (unsolvedArgs, solvedArgs) => {
+    const { round } = this.state;
+    let currentArg;
+    if( round === "1") currentArg = this.getRandomArg(unsolvedArgs);
+    if( round === "2") currentArg = unsolvedArgs[0];
     return this.setState({
       ...this.state,
-      ...this.randomizeArgument(unsolvedArgs),
+      ...currentArg,
       solvedArgs,
       qualifiers: {
         Claim: '?',
@@ -176,7 +178,11 @@ class Game extends Component {
     });
   }
 
-  randomizeArgument = (args) => {
+  // getNextArg = (args) => {
+  //
+  // }
+
+  getRandomArg = (args) => {
     const randomIdx = Math.floor(Math.random() * args.length);
     return {
       'currentArg': args[randomIdx],
@@ -184,31 +190,33 @@ class Game extends Component {
     };
   }
 
-  checkLocalStorage = () => {
-    let { solvedArgs, args } = this.state;
-    if( localStorage.getItem('CognitZen') ) {
-      solvedArgs = JSON.parse(localStorage.getItem('CognitZen'));
-    }
-    pullAt(args, solvedArgs);
-    return args;
-  }
+  // checkLocalStorage = () => {
+  //   let { solvedArgs, args, round } = this.state;
+  //   if( localStorage.getItem(`CognitZen-${ round }`) ) {
+  //     solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
+  //   }
+  //   pullAt(args, solvedArgs);
+  //   return args;
+  // }
 
   componentWillMount = () => {
     let { round, solvedArgs, args } = this.state;
     if(round === "1") {
       //this.checkLocalStorage()
-      if( localStorage.getItem('CognitZen') ) {
-        solvedArgs = JSON.parse(localStorage.getItem('CognitZen'));
+      if( localStorage.getItem(`CognitZen-${ round }`) ) {
+        solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
       }
       pullAt(args, solvedArgs);
       return this.setState({
         ...this.state,
-        ...this.randomizeArgument(args),
+        ...this.getRandomArg(args),
         solvedArgs,
       })
     }
     if(round === "2") {
-
+      if( localStorage.getItem('CognitZen-round2') ) {
+        solvedArgs = JSON.parse(localStorage.getItem('CognitZen-round2'));
+      }
     }
   };
 
