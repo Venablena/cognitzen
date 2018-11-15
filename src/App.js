@@ -10,19 +10,19 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      //<Provider>
-        <Round2 />
-      //</Provider>
+      <Provider
+        args={Data1}
+        round="1"
+      >
+        <Game />
+      </Provider>
     );
   }
 }
 
 export default App;
 {/*
-  <Provider
-    args={Data1}
-    round="1"
-  >
-    <Game />
-  </Provider>
+  //<Provider>
+    <Round2 />
+  //</Provider>
 */}
