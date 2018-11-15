@@ -11,12 +11,13 @@ class App extends Component {
     return (
       <Provider>
         {/*
+          <Round2 />
+
+          */}
           <Game
             // args={Data}
             //round="1"
           />
-          */}
-        <Round2 /> 
       </Provider>
     );
   }

@@ -1,12 +1,9 @@
 import React, { Component, createContext } from 'react';
-import shuffle from 'lodash/shuffle';
+
 import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
 import pullAt from 'lodash/pullAt';
 import Data from './data-1.json';
-
-import Qualifier from './components/Qualifier';
-import Argument from './components/Argument';
 
 const DEFAULT_STATE = {
   qualifiers: {
@@ -18,7 +15,7 @@ const DEFAULT_STATE = {
   args: Data,
   currentArg: Data[1],
   currentArgId: '',
-  wrongQualifier: '',
+
   solvedArgs: [],
   alertState: 'is-hidden',
 }
@@ -27,20 +24,6 @@ export const GameContext = createContext(DEFAULT_STATE);
 
 class Provider extends Component {
   state = DEFAULT_STATE;
-
-  handleDragStart = (e, content, type) => {
-    e.dataTransfer.setData("content", content);
-    e.dataTransfer.setData("type", type);
-    //IE:
-    //ev.dataTransfer.setData(“text/plain”,id);
-  };
-
-  handleDrop = (e, content, type) => {
-    const qualifierContent = e.dataTransfer.getData("content");
-    const suggestionType = e.dataTransfer.getData("type");
-    if(suggestionType === type) return this.logCorrectAnswer(qualifierContent, suggestionType);
-    else return this.logWrongAnswer(type);
-  };
 
   logCorrectAnswer = (content, type) => {
     const { currentArg } = this.state;
@@ -55,59 +38,6 @@ class Provider extends Component {
       currentArg: updatedArg,
     })
   };
-
-  logWrongAnswer = (type) => {
-    this.setState({
-      ...this.state,
-      wrongQualifier: type,
-    })
-
-    setTimeout(()=> {
-      this.setState({
-        ...this.state,
-        wrongQualifier: "",
-      })
-    }, 1200)
-  };
-
-  renderQualifiers = () => {
-    const { qualifiers } = this.state;
-
-    return Object.keys(qualifiers).map((key, idx) => {
-      const type = key;
-      const content = qualifiers[key];
-      const { wrongQualifier } = this.state;
-
-        return (
-          <Qualifier
-            key={idx}
-            type={type}
-            content={content}
-            className={
-              (key===wrongQualifier )? 'qualifier transition-wrong' : 'qualifier'
-            }
-            handleDrop={(e) => this.handleDrop(e, content, type)}
-          />
-        )
-    })
-  };
-
-  renderArg = () => {
-    const { currentArg } = this.state;
-    let argArray = Object.keys(currentArg);
-    //Shuffle the parts of the argument when it's first displayed
-    if ( argArray.length === 3 ) argArray = shuffle(argArray)
-    return argArray.map((key, idx) => {
-      const value = currentArg[key]
-        return (
-          <Argument
-            key={idx}
-            content={value}
-            handleDragStart={(e) => this.handleDragStart(e, value, key)}
-          />
-        )
-    })
-  }
 
   resetStateForNextArg = (unsolvedArgs, solvedArgs) => {
     const { round } = this.state;
@@ -192,16 +122,12 @@ class Provider extends Component {
       <GameContext.Provider
         value = {{
           ...this.state,
-          //handleDragStart: this.handleDragStart,
-          //handleDrop: this.handleDrop,
           logCorrectAnswer: this.logCorrectAnswer,
-          logWrongAnswer: this.logWrongAnswer,
           renderQualifiers: this.renderQualifiers,
-          renderArg: this.renderArg,
           resetStateForNextArg : this.resetStateForNextArg,
           showAlert: this.showAlert,
         }} >
-        {this.props.children}
+        { this.props.children }
       </GameContext.Provider>
     );
   }
