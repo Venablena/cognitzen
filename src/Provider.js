@@ -3,7 +3,6 @@ import React, { Component, createContext } from 'react';
 import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
 import pullAt from 'lodash/pullAt';
-import Data from './data-1.json';
 
 const DEFAULT_STATE = {
   qualifiers: {
@@ -11,19 +10,25 @@ const DEFAULT_STATE = {
     Data: '?',
     Warrant: '?',
   },
-  round: "1",
-  args: Data,
-  currentArg: Data[1],
+  currentArg: {},
   currentArgId: '',
-
   solvedArgs: [],
   alertState: 'is-hidden',
+  // TODO: CREATE A CONTEXT FOR ROUND2 OR ADD IT HERE?! :
+  // contentionTitle: Data.content,
+  // contentions: Data.contentions,
+  // currentCase: Data.contentions[1],
+  // solvedCases: []
 }
 
 export const GameContext = createContext(DEFAULT_STATE);
 
 class Provider extends Component {
-  state = DEFAULT_STATE;
+  state = {
+    ...DEFAULT_STATE,
+    round: this.props.round,
+    args: this.props.args,
+  };
 
   logCorrectAnswer = (content, type) => {
     const { currentArg } = this.state;
@@ -40,10 +45,7 @@ class Provider extends Component {
   };
 
   resetStateForNextArg = (unsolvedArgs, solvedArgs) => {
-    const { round } = this.state;
-    let currentArg;
-    if( round === "1") currentArg = this.getRandomArg(unsolvedArgs);
-    if( round === "2") currentArg = unsolvedArgs[0];
+    const currentArg = this.getRandomArg(unsolvedArgs);
     return this.setState({
       ...this.state,
       ...currentArg,
@@ -82,9 +84,10 @@ class Provider extends Component {
     this.showAlert();
     const { args, solvedArgs } = this.state;
     let updatedArgs = solvedArgs.concat([argId]);
+    pullAt(args, updatedArgs)
+
     //BETTER: remove argId from args..?:
     //delete args[argId]
-    pullAt(args, updatedArgs)
     return this.moveToNextArg(args, updatedArgs);
   }
 
@@ -116,6 +119,34 @@ class Provider extends Component {
       }
     }
   }
+
+// TODO: SHOULD 2nd round ARGS SHUFFLE OR NOT?
+
+  componentWillMount = () => {
+    let { round, solvedArgs, args } = this.state;
+    console.log(this.state.args);
+    if( localStorage.getItem(`CognitZen-${ round }`) ) {
+      solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
+    }
+    pullAt(args, solvedArgs);
+
+    return this.setState({
+      ...this.state,
+      ...this.getRandomArg(args),
+      solvedArgs,
+    })
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { currentArg, currentArgId } = this.state;
+    if(prevState.currentArg !== currentArg) {
+      if(isEmpty(currentArg)) {
+        setTimeout(() => {
+          return this.completeArgument(currentArgId);
+        }, 500)
+      }
+    }
+  };
 
   render() {
     return (

@@ -80,6 +80,7 @@ class Game extends Component {
           qualifiers,
           currentArg,
           logCorrectAnswer,
+          alertState,
         }) => {
           return (
             <div className="App-wrapper">
@@ -90,6 +91,9 @@ class Game extends Component {
               <h2>Argument</h2>
               <div className="qualifiers-container">
                 { this.renderArg(currentArg) }
+              </div>
+              <div className={ `alert ${ alertState }` }>
+                <h2>Correct!</h2>
               </div>
             </div>
           );

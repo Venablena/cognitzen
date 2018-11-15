@@ -2,49 +2,57 @@ import React, { Component } from 'react';
 import Game from './Game';
 import Data from '../data-2.json';
 import Contention from './Contention';
+import Provider from '../Provider';
 
 class Round2 extends Component {
   state = {
-    title: Data.content,
+    contentionTitle: Data.content,
     contentions: Data.contentions,
     currentCase: Data.contentions[1],
     solvedCases: [],
   };
 
+  getCurrentArgs = () => {
+    const { currentCase } = this.state;
+    return Object.keys(currentCase.arguments).map((key, idx) => {
+      return currentCase.arguments[key].parts
+    })
+  }
+
   render() {
     const {
-      title,
+      contentionTitle,
       contentions,
       currentCase
     } = this.state;
 
-    const args = currentCase.arguments[1]
+    const args = this.getCurrentArgs();
 
     return (
-      <div className="">
-        <div className="game-container">
-          <h2>{ title }</h2>
-          <h3>{ currentCase.content }</h3>
-          {
-            <Game
-              currentArg={ args.parts }
-              round= "2"
-            />
-          }
+      <Provider
+        args={args}
+        round= "2"
+      >
+        <div className="">
+          <div className="game-container">
+            <h2>{ contentionTitle }</h2>
+            <h3>{ currentCase.content }</h3>
+            { <Game /> }
+          </div>
+          <div className="contentions-container">
+            { Object.keys(contentions).map((key, idx) => {
+              const cases = contentions[key];
+              return (
+                <Contention
+                  key={idx}
+                  contentionTitle={cases.content}
+                  solvedArgs={[]}
+                />
+              )
+            })}
+          </div>
         </div>
-        <div className="contentions-container">
-          { Object.keys(contentions).map((key, idx) => {
-            const cases = contentions[key];
-            return (
-              <Contention
-                key={idx}
-                title={cases.content}
-                solvedArgs={[]}
-              />
-            )
-          })}
-        </div>
-      </div>
+      </Provider>
     );
   }
 
