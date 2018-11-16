@@ -46,10 +46,12 @@ class Provider extends Component {
 
   resetStateForNextArg = (unsolvedArgs, solvedArgs) => {
     const currentArg = this.getRandomArg(unsolvedArgs);
+
     return this.setState({
       ...this.state,
       ...currentArg,
       solvedArgs,
+      alertState: 'is-hidden',
       qualifiers: {
         Claim: '?',
         Data: '?',
@@ -59,17 +61,18 @@ class Provider extends Component {
   }
 
   showAlert = () => {
+    console.log("show alert");
     this.setState({
       ...this.state,
       alertState: '',
     })
 
-    setTimeout(() => {
-      this.setState({
-        ...this.state,
-        alertState: 'is-hidden',
-      })
-    }, 800)
+    // setTimeout(() => {
+    //   this.setState({
+    //     ...this.state,
+    //     alertState: 'is-hidden',
+    //   })
+    // }, 1200)
   };
 
   getRandomArg = (args) => {
@@ -82,19 +85,23 @@ class Provider extends Component {
 
   completeArgument = (argId) => {
     this.showAlert();
-    const { args, solvedArgs } = this.state;
-    let updatedArgs = solvedArgs.concat([argId]);
-    pullAt(args, updatedArgs)
+    // const { args, solvedArgs } = this.state;
+    // let updatedArgs = solvedArgs.concat([argId]);
+    // pullAt(args, updatedArgs)
 
     //BETTER: remove argId from args..?:
     //delete args[argId]
-    return this.moveToNextArg(args, updatedArgs);
+    // setTimeout(() => {
+    //   return this.moveToNextArg(args, updatedArgs);
+    // }, 1200)
   }
 
-  moveToNextArg = (allArgs, solvedArgs) => {
-    const { round } = this.state;
+  moveToNextArg = (argId) => {
+    const { args, solvedArgs, round } = this.state;
+    let updatedArgs = solvedArgs.concat([argId]);
+    pullAt(args, updatedArgs)
     //If there are unsolved args left
-    if(allArgs.length) {
+    if(args.length) {
       //add the solved arg to localStorage...
       localStorage.setItem(
         `CognitZen-${ round }`,
@@ -105,12 +112,12 @@ class Provider extends Component {
         //make it visible in the contention review
       }
       //...and refresh the state
-      return this.resetStateForNextArg(allArgs, solvedArgs);
+      return this.resetStateForNextArg(args, solvedArgs);
     } else {
       if(round === "1") {
         localStorage.removeItem(`CognitZen-${ round }`);
         solvedArgs = [];
-        return this.resetStateForNextArg(allArgs, solvedArgs)
+        return this.resetStateForNextArg(args, solvedArgs)
       }
       if(round === "2") {
         //add contention to localStorage
@@ -155,7 +162,7 @@ class Provider extends Component {
           ...this.state,
           logCorrectAnswer: this.logCorrectAnswer,
           renderQualifiers: this.renderQualifiers,
-          resetStateForNextArg : this.resetStateForNextArg,
+          moveToNextArg : this.moveToNextArg,
           showAlert: this.showAlert,
         }} >
         { this.props.children }

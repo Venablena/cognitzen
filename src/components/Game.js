@@ -81,6 +81,7 @@ class Game extends Component {
           currentArg,
           logCorrectAnswer,
           alertState,
+          moveToNextArg
         }) => {
           return (
             <div className="App-wrapper">
@@ -94,6 +95,9 @@ class Game extends Component {
               </div>
               <div className={ `alert ${ alertState }` }>
                 <h2>Correct!</h2>
+                <button onClick={ moveToNextArg }>
+                  Next
+                </button>
               </div>
             </div>
           );
