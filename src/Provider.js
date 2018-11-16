@@ -61,12 +61,11 @@ class Provider extends Component {
   }
 
   showAlert = () => {
-    console.log("show alert");
     this.setState({
       ...this.state,
       alertState: '',
     })
-
+    //THIS IS FOR MOVING ON AUTOMATICALLY AFTER COMPLETING AN ARGUMENT
     // setTimeout(() => {
     //   this.setState({
     //     ...this.state,
@@ -83,18 +82,19 @@ class Provider extends Component {
     };
   }
 
-  completeArgument = (argId) => {
-    this.showAlert();
-    // const { args, solvedArgs } = this.state;
-    // let updatedArgs = solvedArgs.concat([argId]);
-    // pullAt(args, updatedArgs)
-
-    //BETTER: remove argId from args..?:
-    //delete args[argId]
-    // setTimeout(() => {
-    //   return this.moveToNextArg(args, updatedArgs);
-    // }, 1200)
-  }
+  //THIS IS FOR MOVING ON AUTOMATICALLY AFTER COMPLETING AN ARGUMENT
+  // completeArgument = (argId) => {
+  //   this.showAlert();
+  //   // const { args, solvedArgs } = this.state;
+  //   // let updatedArgs = solvedArgs.concat([argId]);
+  //   // pullAt(args, updatedArgs)
+  //
+  //   //BETTER: remove argId from args..?:
+  //   //delete args[argId]
+  //   // setTimeout(() => {
+  //   //   return this.moveToNextArg(args, updatedArgs);
+  //   // }, 1200)
+  // }
 
   moveToNextArg = (argId) => {
     const { args, solvedArgs, round } = this.state;
@@ -131,7 +131,6 @@ class Provider extends Component {
 
   componentWillMount = () => {
     let { round, solvedArgs, args } = this.state;
-    console.log(this.state.args);
     if( localStorage.getItem(`CognitZen-${ round }`) ) {
       solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
     }
@@ -145,12 +144,12 @@ class Provider extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    const { currentArg, currentArgId } = this.state;
+    const { currentArg } = this.state;
     if(prevState.currentArg !== currentArg) {
       if(isEmpty(currentArg)) {
         setTimeout(() => {
-          return this.completeArgument(currentArgId);
-        }, 500)
+          return this.showAlert();
+        }, 300)
       }
     }
   };
@@ -163,7 +162,6 @@ class Provider extends Component {
           logCorrectAnswer: this.logCorrectAnswer,
           renderQualifiers: this.renderQualifiers,
           moveToNextArg : this.moveToNextArg,
-          showAlert: this.showAlert,
         }} >
         { this.props.children }
       </GameContext.Provider>
