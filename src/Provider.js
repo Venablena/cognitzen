@@ -4,6 +4,8 @@ import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
 import pullAt from 'lodash/pullAt';
 
+import PopUp from './components/PopUp';
+
 const DEFAULT_STATE = {
   qualifiers: {
     Claim: '?',
@@ -14,6 +16,8 @@ const DEFAULT_STATE = {
   currentArgId: '',
   solvedArgs: [],
   alertState: 'is-hidden',
+  surveyUser: undefined,
+  surveyCount: 0,
   // TODO: CREATE A CONTEXT FOR ROUND2 OR ADD IT HERE?! :
   // contentionTitle: Data.content,
   // contentions: Data.contentions,
@@ -46,11 +50,13 @@ class Provider extends Component {
 
   resetStateForNextArg = (unsolvedArgs, solvedArgs) => {
     const currentArg = this.getRandomArg(unsolvedArgs);
+    const surveyCount = this.trackSurveyCount();
 
     return this.setState({
       ...this.state,
       ...currentArg,
       solvedArgs,
+      surveyCount,
       alertState: 'is-hidden',
       qualifiers: {
         Claim: '?',
@@ -58,6 +64,11 @@ class Provider extends Component {
         Warrant: '?',
       }
     });
+  }
+
+  trackSurveyCount = () => {
+    let { surveyUser, surveyCount } = this.state;
+    return ( surveyUser ? 0 : surveyCount +=1)
   }
 
   showAlert = () => {
@@ -97,7 +108,7 @@ class Provider extends Component {
   // }
 
   moveToNextArg = (argId) => {
-    const { args, solvedArgs, round } = this.state;
+    let { args, solvedArgs, round } = this.state;
     let updatedArgs = solvedArgs.concat([argId]);
     pullAt(args, updatedArgs)
     //If there are unsolved args left
@@ -128,8 +139,16 @@ class Provider extends Component {
   }
 
 // TODO: SHOULD 2nd round ARGS SHUFFLE OR NOT?
+  openSurvey = () => {
+    console.log("open survey");
+    return (
+      <PopUp />
+    )
+  };
 
   componentWillMount = () => {
+    //MAKE A WIX DB CALL TO GET THE surveyUser
+    //IF USER, surveyUser = USER
     let { round, solvedArgs, args } = this.state;
     if( localStorage.getItem(`CognitZen-${ round }`) ) {
       solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
@@ -140,13 +159,16 @@ class Provider extends Component {
       ...this.state,
       ...this.getRandomArg(args),
       solvedArgs,
+      //surveyUser
     })
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    const { currentArg } = this.state;
-    if(prevState.currentArg !== currentArg) {
-      if(isEmpty(currentArg)) {
+    //IF (SURVEYCOUNT%5 === 0 && < 20){ call survey pop up }
+    const { currentArg, surveyCount } = this.state;
+    if( surveyCount % 5 === 0 ) this.openSurvey()
+    if( prevState.currentArg !== currentArg ) {
+      if( isEmpty(currentArg) ) {
         setTimeout(() => {
           return this.showAlert();
         }, 300)
