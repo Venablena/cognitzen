@@ -90,7 +90,7 @@ class Game extends Component {
                 { this.renderQualifiers(qualifiers,logCorrectAnswer) }
               </div>
               <h2>Argument</h2>
-              <div className="qualifiers-container">
+              <div className="arguments-container">
                 { this.renderArg(currentArg) }
               </div>
               <div className={ `alert ${ alertState }` }>

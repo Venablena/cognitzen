@@ -17,15 +17,20 @@ h2 {
 }
 
 .App-wrapper {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   position: relative;
   text-align: center;
+  width: 100%;
   max-width: 1000px;
   margin: auto;
   background-image: linear-gradient(#ed1c24, #fac936);
   background-color: black;
 }
 
+.arguments-container,
 .qualifiers-container {
+  /* padding: 1rem; */
   width: 100%;
   display: flex;
   align-items: stretch;
@@ -47,15 +52,15 @@ h2 {
 .qualifier {
   position: relative;
   box-sizing: border-box;
-  width: 33%;
+  width: 30%;
   border-radius: 20px;
   background-color: white;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 15px;
-  padding: 25px;
+  margin: 0.25rem;
+  padding: 0.5rem;
 }
 
 .qualifier > header {
@@ -110,17 +115,6 @@ h2 {
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-/* POP UP  */
-
-/* .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-} */
-
 .modal {
   position:fixed;
   background: rgba(0, 0, 0, 0.5);
@@ -131,10 +125,14 @@ h2 {
   transform: translate(-50%,-50%);
 }
 
-/* .display-block {
-  display: block;
-}
+@media (max-width: 400px) {
+  .arguments-container {
+    flex-direction: column;
+  }
 
-.display-none {
-  display: none;
-} */
+  .argument {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
