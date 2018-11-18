@@ -1,10 +1,11 @@
 import React, { Component, createContext } from 'react';
+import ReactDOM from 'react-dom';
 
 import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
 import pullAt from 'lodash/pullAt';
 
-import PopUp from './components/PopUp';
+import Modal from './components/Modal';
 
 const DEFAULT_STATE = {
   qualifiers: {
@@ -18,6 +19,7 @@ const DEFAULT_STATE = {
   alertState: 'is-hidden',
   surveyUser: undefined,
   surveyCount: 0,
+  showModal: false,
   // TODO: CREATE A CONTEXT FOR ROUND2 OR ADD IT HERE?! :
   // contentionTitle: Data.content,
   // contentions: Data.contentions,
@@ -141,10 +143,19 @@ class Provider extends Component {
 // TODO: SHOULD 2nd round ARGS SHUFFLE OR NOT?
   openSurvey = () => {
     console.log("open survey");
-    return (
-      <PopUp />
-    )
+    this.setState({
+      ...this.state,
+      showModal: true
+    })
   };
+
+  handleModalClose = () => {
+    console.log("close survey");
+    this.setState({
+      ...this.state,
+      showModal: false
+    })
+  }
 
   componentWillMount = () => {
     //MAKE A WIX DB CALL TO GET THE surveyUser
@@ -164,15 +175,14 @@ class Provider extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    //IF (SURVEYCOUNT%5 === 0 && < 20){ call survey pop up }
     const { currentArg, surveyCount } = this.state;
-    if( surveyCount % 5 === 0 ) this.openSurvey()
     if( prevState.currentArg !== currentArg ) {
       if( isEmpty(currentArg) ) {
         setTimeout(() => {
           return this.showAlert();
         }, 300)
       }
+      if( (surveyCount >= 5 ) && (surveyCount % 5 === 0 )) this.openSurvey()
     }
   };
 
@@ -184,6 +194,7 @@ class Provider extends Component {
           logCorrectAnswer: this.logCorrectAnswer,
           renderQualifiers: this.renderQualifiers,
           moveToNextArg : this.moveToNextArg,
+          handleModalClose: this.handleModalClose,
         }} >
         { this.props.children }
       </GameContext.Provider>
