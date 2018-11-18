@@ -6,7 +6,7 @@ const Argument = ({
 }) => {
 
   return (
-    <div className= 'argument'
+    <div className = 'argument'
       draggable
       onDragStart = { handleDragStart }
     >{ content }</div>

@@ -142,7 +142,6 @@ class Provider extends Component {
 
 // TODO: SHOULD 2nd round ARGS SHUFFLE OR NOT?
   openSurvey = () => {
-    console.log("open survey");
     this.setState({
       ...this.state,
       showModal: true
@@ -150,7 +149,6 @@ class Provider extends Component {
   };
 
   handleModalClose = () => {
-    console.log("close survey");
     this.setState({
       ...this.state,
       showModal: false
