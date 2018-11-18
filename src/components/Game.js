@@ -94,10 +94,15 @@ class Game extends Component {
                 { this.renderArg(currentArg) }
               </div>
               <div className={ `alert ${ alertState }` }>
-                <h2>Correct!</h2>
-                <button onClick={ moveToNextArg }>
-                  Next
-                </button>
+                <h2>Correct!
+                  <span>
+                    <button
+                      className='button-next'
+                      onClick={ moveToNextArg }>
+                      >
+                    </button>
+                  </span>
+                </h2>
               </div>
             </div>
           );

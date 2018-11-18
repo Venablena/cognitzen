@@ -15,7 +15,11 @@ class Modal extends Component {
           if(showModal) {
             return ReactDOM.createPortal (
               <main className={`modal`}>
-                <button onClick={handleModalClose}>close</button>
+                <button
+                  className='button-close'
+                  onClick={handleModalClose}>
+                  &times;
+                </button>
                 <iframe
                   src="https://docs.google.com/forms/d/e/1FAIpQLSfnnfAmdrjmlMkb2FZM3KHBEfm8UGLIfLuaSznI96xOD0dYjA/viewform?embedded=true"
                   width="100%"
