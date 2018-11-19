@@ -180,7 +180,11 @@ class Provider extends Component {
           return this.showAlert();
         }, 300)
       }
-      if( (surveyCount >= 5 ) && (surveyCount % 5 === 0 )) this.openSurvey()
+      if( (surveyCount >= 5 ) && (surveyCount % 5 === 0 )) {
+        // This is a quick fix for not opening the survey 3 times in a row
+        this.trackSurveyCount()
+        this.openSurvey()
+      }
     }
   };
 

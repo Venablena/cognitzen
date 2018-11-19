@@ -15,11 +15,12 @@ class Modal extends Component {
           if(showModal) {
             return ReactDOM.createPortal (
               <main className={`modal`}>
-                <button
+              //TODO: CHECK IF THIS CAN BE STYLED WITHOUT BACKGROUND AS A BUTTON INSTEAD OF DIV
+                <div
                   className='button-close'
                   onClick={handleModalClose}>
                   &times;
-                </button>
+                </div>
                 <iframe
                   src="https://docs.google.com/forms/d/e/1FAIpQLSfnnfAmdrjmlMkb2FZM3KHBEfm8UGLIfLuaSznI96xOD0dYjA/viewform?embedded=true"
                   width="100%"
