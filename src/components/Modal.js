@@ -15,7 +15,6 @@ class Modal extends Component {
           if(showModal) {
             return ReactDOM.createPortal (
               <main className={`modal`}>
-              //TODO: CHECK IF THIS CAN BE STYLED WITHOUT BACKGROUND AS A BUTTON INSTEAD OF DIV
                 <button
                   className='button-close'
                   onClick={handleModalClose}>

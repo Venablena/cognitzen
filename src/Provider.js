@@ -149,9 +149,11 @@ class Provider extends Component {
   };
 
   handleModalClose = () => {
+    const surveyCount = this.trackSurveyCount();
     this.setState({
       ...this.state,
-      showModal: false
+      showModal: false,
+      surveyCount,
     })
   }
 
@@ -181,8 +183,6 @@ class Provider extends Component {
         }, 300)
       }
       if( (surveyCount >= 5 ) && (surveyCount % 5 === 0 )) {
-        // This is a quick fix for not opening the survey 3 times in a row
-        this.trackSurveyCount()
         this.openSurvey()
       }
     }
