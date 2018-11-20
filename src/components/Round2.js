@@ -46,7 +46,7 @@ class Round2 extends Component {
                 <Contention
                   key={idx}
                   contentionTitle={cases.content}
-                  solvedArgs={[]}
+                  solvedArgIds={[]}
                 />
               )
             })}

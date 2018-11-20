@@ -23,7 +23,7 @@ class Game extends Component {
 //     currentArg: this.props.currentArg,
 //     currentArgId: '',
 //     wrongQualifier: '',
-//     solvedArgs: [],
+//     solvedArgIds: [],
 //     alertState: 'is-hidden',
 //   };
 //
@@ -126,15 +126,15 @@ class Game extends Component {
   //(unsolved) args and move to next arg with the new unsolved & solved args
 
 
-  // resetStateForNextArg = (unsolvedArgs, solvedArgs) => {
+  // resetStateForNextArg = (unsolvedArgIds, solvedArgIds) => {
   //   const { round } = this.state;
   //   let currentArg;
-  //   if( round === "1") currentArg = this.getRandomArg(unsolvedArgs);
-  //   if( round === "2") currentArg = unsolvedArgs[0];
+  //   if( round === "1") currentArg = this.getRandomArg(unsolvedArgIds);
+  //   if( round === "2") currentArg = unsolvedArgIds[0];
   //   return this.setState({
   //     ...this.state,
   //     ...currentArg,
-  //     solvedArgs,
+  //     solvedArgIds,
   //     qualifiers: {
   //       Claim: '?',
   //       Data: '?',
@@ -156,31 +156,31 @@ class Game extends Component {
   // }
 
   // checkLocalStorage = () => {
-  //   let { solvedArgs, args, round } = this.state;
+  //   let { solvedArgIds, args, round } = this.state;
   //   if( localStorage.getItem(`CognitZen-${ round }`) ) {
-  //     solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
+  //     solvedArgIds = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
   //   }
-  //   pullAt(args, solvedArgs);
+  //   pullAt(args, solvedArgIds);
   //   return args;
   // }
 
   // componentWillMount = () => {
-  //   let { round, solvedArgs, args } = this.state;
+  //   let { round, solvedArgIds, args } = this.state;
   //   if(round === "1") {
   //     //this.checkLocalStorage()
   //     if( localStorage.getItem(`CognitZen-${ round }`) ) {
-  //       solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
+  //       solvedArgIds = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
   //     }
-  //     pullAt(args, solvedArgs);
+  //     pullAt(args, solvedArgIds);
   //     return this.setState({
   //       ...this.state,
   //       ...this.getRandomArg(args),
-  //       solvedArgs,
+  //       solvedArgIds,
   //     })
   //   }
   //   if(round === "2") {
   //     if( localStorage.getItem('CognitZen-round2') ) {
-  //       solvedArgs = JSON.parse(localStorage.getItem('CognitZen-round2'));
+  //       solvedArgIds = JSON.parse(localStorage.getItem('CognitZen-round2'));
   //     }
   //   }
   // };

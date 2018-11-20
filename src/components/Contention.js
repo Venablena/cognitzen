@@ -8,15 +8,15 @@ class Contention extends Component {
   render(){
     const {
       title,
-      solvedArgs,
+      solvedArgIds,
     } = this.props;
 
     return (
       <Fragment>
         <h3>{ title }</h3>
         <div>
-          {  solvedArgs.length &&
-              solvedArgs.map((el, i) => {
+          {  solvedArgIds.length &&
+              solvedArgIds.map((el, i) => {
                 return <p>{el}</p>
               })
           }

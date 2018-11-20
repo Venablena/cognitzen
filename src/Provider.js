@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
-import pullAt from 'lodash/pullAt';
+import difference from 'lodash/difference';
 
 import Modal from './components/Modal';
 
@@ -15,7 +15,7 @@ const DEFAULT_STATE = {
   },
   currentArg: {},
   currentArgId: '',
-  solvedArgs: [],
+  //solvedArgIds: [],
   alertState: 'is-hidden',
   surveyUser: undefined,
   surveyCount: 0,
@@ -34,6 +34,7 @@ class Provider extends Component {
     ...DEFAULT_STATE,
     round: this.props.round,
     args: this.props.args,
+    unsolvedArgIds: this.props.unsolvedArgIds,
   };
 
   logCorrectAnswer = (content, type) => {
@@ -50,15 +51,15 @@ class Provider extends Component {
     })
   };
 
-  resetStateForNextArg = (unsolvedArgs, solvedArgs) => {
-    const currentArg = this.getRandomArg(unsolvedArgs);
+  resetStateForNextArg = (unsolvedArgIds) => {
+    const currentArg = this.getRandomArg();
     const surveyCount = this.trackSurveyCount();
 
     return this.setState({
       ...this.state,
       ...currentArg,
-      solvedArgs,
       surveyCount,
+      unsolvedArgIds,
       alertState: 'is-hidden',
       qualifiers: {
         Claim: '?',
@@ -87,10 +88,10 @@ class Provider extends Component {
     // }, 1200)
   };
 
-  getRandomArg = (args) => {
-    const argIds = Object.keys(args);
-    const randomIdx = Math.floor(Math.random() * argIds.length);
-    const currentArgIndex = argIds[randomIdx];
+  getRandomArg = () => {
+    const { unsolvedArgIds, args } = this.state;
+    const randomIdx = Math.floor(Math.random() * unsolvedArgIds.length);
+    const currentArgIndex = unsolvedArgIds[randomIdx];
     const currentArg = args[currentArgIndex]
     const currentArgId = currentArg.Id;
     delete currentArg.Id;
@@ -104,8 +105,8 @@ class Provider extends Component {
   //THIS IS FOR MOVING ON AUTOMATICALLY AFTER COMPLETING AN ARGUMENT
   // completeArgument = (argId) => {
   //   this.showAlert();
-  //   // const { args, solvedArgs } = this.state;
-  //   // let updatedArgs = solvedArgs.concat([argId]);
+  //   // const { args, solvedArgIds } = this.state;
+  //   // let updatedArgs = solvedArgIds.concat([argId]);
   //   // pullAt(args, updatedArgs)
   //
   //   //BETTER: remove argId from args..?:
@@ -116,12 +117,18 @@ class Provider extends Component {
   // }
 
   moveToNextArg = (argId) => {
-    let { args, solvedArgs, round } = this.state;
-    let updatedArgs = solvedArgs.concat([argId]);
-    //pullAt(args, updatedArgs)
-    //If there are unsolved args left
-    if(args.length) {
+    const {
+      args,
+      unsolvedArgIds,
+      round
+    } = this.state;
+
+    //Remove the solved arg from the unsolved args...
+    let updatedUnsolvedArgs = difference(unsolvedArgIds, argId);
+    //...and if there are unsolved args left
+    if(updatedUnsolvedArgs.length) {
       //add the solved arg to localStorage...
+      const solvedArgs = this.getSolvedIds().concat(argId);
       localStorage.setItem(
         `CognitZen-${ round }`,
         JSON.stringify(solvedArgs)
@@ -130,20 +137,18 @@ class Provider extends Component {
       if(round === "2") {
         //make it visible in the contention review
       }
-      //...and refresh the state
-      return this.resetStateForNextArg(args, solvedArgs);
     } else {
       if(round === "1") {
-        localStorage.removeItem(`CognitZen-${ round }`);
-        solvedArgs = [];
-        return this.resetStateForNextArg(args, solvedArgs)
+        localStorage.setItem(`CognitZen-${ round }: []`);
+        updatedUnsolvedArgs = Object.keys(args);
+
       }
       if(round === "2") {
         //add contention to localStorage
         //make it visible in the round2 container
-        //move on to the next contention (reset args & currentArg)
       }
     }
+    return this.resetStateForNextArg(updatedUnsolvedArgs);
   }
 
 // TODO: SHOULD 2nd round ARGS SHUFFLE OR NOT?
@@ -163,20 +168,25 @@ class Provider extends Component {
     })
   }
 
+  getSolvedIds = () => {
+    const {round} = this.state;
+    if( localStorage.getItem(`CognitZen-${ round }`) ) {
+      return JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
+    }
+    return [];
+  }
+
   componentWillMount = () => {
     //MAKE A WIX DB CALL TO GET THE surveyUser
     //IF USER, surveyUser = USER
-    let { round,  solvedArgs, args } = this.state;
-    console.log(args)
-    if( localStorage.getItem(`CognitZen-${ round }`) ) {
-      solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
-    }
-    //pullAt(args, solvedArgs);
+    const { unsolvedArgIds } = this.state;
+    const solvedArgIds = this.getSolvedIds();
+    const unsolvedArgs = difference(unsolvedArgIds, solvedArgIds);
 
     return this.setState({
       ...this.state,
-      ...this.getRandomArg(args),
-      solvedArgs,
+      ...this.getRandomArg(),
+      unsolvedArgIds: unsolvedArgs,
       //surveyUser
     })
   };
