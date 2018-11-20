@@ -88,10 +88,16 @@ class Provider extends Component {
   };
 
   getRandomArg = (args) => {
-    const randomIdx = Math.floor(Math.random() * args.length);
+    const argIds = Object.keys(args);
+    const randomIdx = Math.floor(Math.random() * argIds.length);
+    const currentArgIndex = argIds[randomIdx];
+    const currentArg = args[currentArgIndex]
+    const currentArgId = currentArg.Id;
+    delete currentArg.Id;
+
     return {
-      'currentArg': args[randomIdx],
-      'currentArgId': randomIdx,
+      currentArg,
+      currentArgId,
     };
   }
 
@@ -112,7 +118,7 @@ class Provider extends Component {
   moveToNextArg = (argId) => {
     let { args, solvedArgs, round } = this.state;
     let updatedArgs = solvedArgs.concat([argId]);
-    pullAt(args, updatedArgs)
+    //pullAt(args, updatedArgs)
     //If there are unsolved args left
     if(args.length) {
       //add the solved arg to localStorage...
@@ -160,11 +166,12 @@ class Provider extends Component {
   componentWillMount = () => {
     //MAKE A WIX DB CALL TO GET THE surveyUser
     //IF USER, surveyUser = USER
-    let { round, solvedArgs, args } = this.state;
+    let { round,  solvedArgs, args } = this.state;
+    console.log(args)
     if( localStorage.getItem(`CognitZen-${ round }`) ) {
       solvedArgs = JSON.parse(localStorage.getItem(`CognitZen-${ round }`));
     }
-    pullAt(args, solvedArgs);
+    //pullAt(args, solvedArgs);
 
     return this.setState({
       ...this.state,
