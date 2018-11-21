@@ -5,8 +5,6 @@ import shuffle from 'lodash/shuffle';
 import Argument from './Argument';
 import Qualifier from './Qualifier';
 
-import pull from 'lodash/pull';
-
 class Game extends Component {
   state = {
     wrongQualifier: '',
@@ -14,7 +12,6 @@ class Game extends Component {
 
   renderArg = (currentArg) => {
     let argArray = Object.keys(currentArg);
-    pull(argArray, 'Id');
     //Shuffle the parts of the argument when it's first displayed
     if ( argArray.length === 3 ) argArray = shuffle(argArray)
     return argArray.map((key, idx) => {

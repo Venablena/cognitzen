@@ -53,7 +53,8 @@ class Provider extends Component {
 
   resetStateForNextArg = (unsolvedArgIds) => {
     const { args } = this.state;
-    const currentArg = this.getRandomArg(unsolvedArgIds, args);
+    // const currentArg = this.getRandomArg(unsolvedArgIds, args);
+    const currentArg = this.getRandomArg();
     const surveyCount = this.trackSurveyCount();
 
     return this.setState({
@@ -89,20 +90,21 @@ class Provider extends Component {
     // }, 1200)
   };
 
-  getRandomArg = (unsolvedArgs, allArgs) => {
-    //WHY DO I NEED TO PASS THE PARAMETERS HERE?
-    //IF I GET THESE FROM THE STATE INSIDE GETRANDOMARG,
-    //THEY ARE STALE
-    //const { unsolvedArgIds, args } = this.state;
-    const randomIdx = Math.floor(Math.random() * unsolvedArgs.length);
-    const id = unsolvedArgs[randomIdx];
-    const currentArg = allArgs[id]
+  getRandomArg = () => {
+    const { unsolvedArgIds, args } = this.state;
+    //if(unsolvedArgs.length) {
+      const randomIdx = Math.floor(Math.random() * unsolvedArgIds.length);
+      const id = unsolvedArgIds[randomIdx];
+      const currentArg = args[id]
+      // console.log("arg", currentArg);
+      // console.log("id", id);
+      return {
+        currentArg,
+        currentArgId: id,
+      };
+    //}
+  }
 
-    return {
-      currentArg,
-      currentArgId: id,
-    };
-  };
   //THIS IS FOR MOVING ON AUTOMATICALLY AFTER COMPLETING AN ARGUMENT
   // completeArgument = (argId) => {
   //   this.showAlert();
@@ -125,7 +127,8 @@ class Provider extends Component {
       currentArgId
     } = this.state;
     //Remove the solved arg from the unsolved args...
-    let updatedUnsolvedArgs = difference(unsolvedArgIds, [currentArgId]);
+    let updatedUnsolvedArgs = difference(unsolvedArgIds, currentArgId);
+    //console.log(updatedUnsolvedArgs.length);
     //...and if there are unsolved args left
     if(updatedUnsolvedArgs.length) {
       //add the solved arg to localStorage...
@@ -141,7 +144,7 @@ class Provider extends Component {
       console.log("no more unsolvedArgs");
       if(round === "1") {
         localStorage.setItem(`CognitZen-${ round }`, "[]");
-        updatedUnsolvedArgs = this.props.unsolvedArgIds;
+        updatedUnsolvedArgs = Object.keys(args);
       }
       if(round === "2") {
       //   //add contention to localStorage
@@ -181,22 +184,21 @@ class Provider extends Component {
     //IF USER, surveyUser = USER
     const { unsolvedArgIds, args, round } = this.state;
     const solvedArgIds = this.getSolvedIds();
-    // console.log("solved:", solvedArgIds);
-    // console.log("unsolved:", unsolvedArgIds);
     let unsolvedArgs = difference(unsolvedArgIds, solvedArgIds);
-    // console.log('really unsolved:', unsolvedArgs.length);
-
     if(!unsolvedArgs.length) {
       unsolvedArgs = this.props.unsolvedArgIds;
       localStorage.setItem(`CognitZen-${ round }`, "[]");
     }
-
-    return this.setState({
-      ...this.state,
-      ...this.getRandomArg(unsolvedArgs, args),
-      unsolvedArgIds: unsolvedArgs,
-      //surveyUser
-    })
+    return this.resetStateForNextArg(unsolvedArgs);
+    // return this.setState({
+    //   ...this.state,
+    //   //WHY DO I NEED TO PASS THE PARAMETERS HERE?
+    //   //IF I GET THESE FROM THE STATE INSIDE GETRANDOMARG,
+    //   //THEY ARE STALE
+    //   ...this.getRandomArg(unsolvedArgs, args),
+    //   unsolvedArgIds: unsolvedArgs,
+    //   //surveyUser
+    // })
   };
 
   componentDidUpdate = (prevProps, prevState) => {
