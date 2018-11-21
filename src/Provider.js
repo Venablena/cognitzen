@@ -1,11 +1,8 @@
 import React, { Component, createContext } from 'react';
-import ReactDOM from 'react-dom';
 
 import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
 import difference from 'lodash/difference';
-
-import Modal from './components/Modal';
 
 const DEFAULT_STATE = {
   qualifiers: {
@@ -98,16 +95,13 @@ class Provider extends Component {
 
   moveToNextArg = () => {
     const {
-      args,
       unsolvedArgIds,
       round,
       currentArgId
     } = this.state;
-    //Remove the solved arg from the unsolved args...
+
     let updatedUnsolvedArgs = difference(unsolvedArgIds, [currentArgId]);
-    //...and if there are unsolved args left
     if(updatedUnsolvedArgs.length) {
-      //add the solved arg to localStorage...
       const solvedArgs = this.getSolvedIds().concat([currentArgId]);
       localStorage.setItem(
         `CognitZen-${ round }`,
