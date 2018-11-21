@@ -119,6 +119,27 @@ class Provider extends Component {
   //   // }, 1200)
   // }
 
+  resetLocalStorage = () => {
+    const {
+      unsolvedArgIds,
+      round,
+      currentArgId
+    } = this.state;
+
+    let updatedUnsolvedArgs = difference(unsolvedArgIds, [currentArgId]);
+    if(updatedUnsolvedArgs.length) {
+      const solvedArgs = this.getSolvedIds().concat([currentArgId]);
+      localStorage.setItem(
+        `CognitZen-${ round }`,
+        JSON.stringify(solvedArgs)
+      );
+    } else {
+        localStorage.setItem(`CognitZen-${ round }`, "[]");
+        updatedUnsolvedArgs = this.props.unsolvedArgIds;
+    }
+    return this.resetStateForNextArg(updatedUnsolvedArgs);
+  };
+
   moveToNextArg = () => {
     const {
       args,

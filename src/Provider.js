@@ -15,7 +15,6 @@ const DEFAULT_STATE = {
   },
   currentArg: {},
   currentArgId: '',
-  //solvedArgIds: [],
   alertState: 'is-hidden',
   surveyUser: undefined,
   surveyCount: 0,
@@ -80,13 +79,6 @@ class Provider extends Component {
       ...this.state,
       alertState: '',
     })
-    //THIS IS FOR MOVING ON AUTOMATICALLY AFTER COMPLETING AN ARGUMENT
-    // setTimeout(() => {
-    //   this.setState({
-    //     ...this.state,
-    //     alertState: 'is-hidden',
-    //   })
-    // }, 1200)
   };
 
   getRandomArg = (unsolvedArgs, allArgs) => {
@@ -103,19 +95,6 @@ class Provider extends Component {
       currentArgId: id,
     };
   };
-  //THIS IS FOR MOVING ON AUTOMATICALLY AFTER COMPLETING AN ARGUMENT
-  // completeArgument = (argId) => {
-  //   this.showAlert();
-  //   // const { args, solvedArgIds } = this.state;
-  //   // let updatedArgs = solvedArgIds.concat([argId]);
-  //   // pullAt(args, updatedArgs)
-  //
-  //   //BETTER: remove argId from args..?:
-  //   //delete args[argId]
-  //   // setTimeout(() => {
-  //   //   return this.moveToNextArg(args, updatedArgs);
-  //   // }, 1200)
-  // }
 
   moveToNextArg = () => {
     const {
@@ -138,7 +117,6 @@ class Provider extends Component {
         //make it visible in the contention review
       }
     } else {
-      console.log("no more unsolvedArgs");
       if(round === "1") {
         localStorage.setItem(`CognitZen-${ round }`, "[]");
         updatedUnsolvedArgs = this.props.unsolvedArgIds;
@@ -181,10 +159,7 @@ class Provider extends Component {
     //IF USER, surveyUser = USER
     const { unsolvedArgIds, args, round } = this.state;
     const solvedArgIds = this.getSolvedIds();
-    // console.log("solved:", solvedArgIds);
-    // console.log("unsolved:", unsolvedArgIds);
     let unsolvedArgs = difference(unsolvedArgIds, solvedArgIds);
-    // console.log('really unsolved:', unsolvedArgs.length);
 
     if(!unsolvedArgs.length) {
       unsolvedArgs = this.props.unsolvedArgIds;
