@@ -157,19 +157,14 @@ class Provider extends Component {
   componentWillMount = () => {
     //MAKE A WIX DB CALL TO GET THE surveyUser
     //IF USER, surveyUser = USER
-    const { unsolvedArgIds, args, round } = this.state;
+    let { unsolvedArgIds, args } = this.state;
     const solvedArgIds = this.getSolvedIds();
-    let unsolvedArgs = difference(unsolvedArgIds, solvedArgIds);
-
-    if(!unsolvedArgs.length) {
-      unsolvedArgs = this.props.unsolvedArgIds;
-      localStorage.setItem(`CognitZen-${ round }`, "[]");
-    }
+    if(solvedArgIds.length) unsolvedArgIds = difference(unsolvedArgIds, solvedArgIds);
 
     return this.setState({
       ...this.state,
-      ...this.getRandomArg(unsolvedArgs, args),
-      unsolvedArgIds: unsolvedArgs,
+      ...this.getRandomArg(unsolvedArgIds, args),
+      unsolvedArgIds,
       //surveyUser
     })
   };
