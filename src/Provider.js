@@ -1,4 +1,5 @@
 import React, { Component, createContext } from 'react';
+import axios from 'axios';
 
 import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
@@ -150,6 +151,20 @@ class Provider extends Component {
 
   componentWillMount = () => {
     //MAKE A WIX DB CALL TO GET THE surveyUser
+
+    // POST TO WIX DATABASE //
+    // UrlFetchApp.fetch('https://www.cognitzen.com/_functions/user', {	"headers": {
+    //   "Access-Control-Allow-Origin": "*",
+		// 	"Content-Type": "application/json"
+		// }});
+
+    axios.get('https://www.cognitzen.com/_functions/user', {	"headers": {
+      "Access-Control-Allow-Origin": "*",
+			"Content-Type": "application/json"
+		}})
+      .then((result) => {
+        console.log(result);
+      })
     //IF USER, surveyUser = USER
     let { unsolvedArgIds, args } = this.state;
     const solvedArgIds = this.getSolvedIds();

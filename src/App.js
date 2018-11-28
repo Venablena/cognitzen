@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Provider from './Provider';
-//import Consumer from './Consumer';
 import Game from './components/Game';
 import Round2 from './components/Round2';
 import Modal from './components/Modal';
@@ -27,8 +26,3 @@ class App extends Component {
 }
 
 export default App;
-{/*
-  //<Provider>
-    <Round2 />
-  //</Provider>
-*/}

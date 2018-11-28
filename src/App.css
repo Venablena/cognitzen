@@ -12,6 +12,14 @@
       RGB: (16,2,31)
  */
 
+ :root {
+   --red: #ed1c24;
+   --orange: #f48c2d;
+   --yellow: #fac936;
+   --purple: #d9cceb;
+   --black: #10021f;
+ }
+
 h2 {
   margin: 0;
 }
@@ -24,7 +32,7 @@ h2 {
   width: 100%;
   max-width: 1000px;
   margin: auto;
-  background-image: linear-gradient(#ed1c24, #fac936);
+  background-image: linear-gradient(var(--red), var(--yellow));
   background-color: black;
 }
 
@@ -40,7 +48,7 @@ h2 {
 
 .contentions-container {
   /* width: 40%; */
-  background-color: red;
+  background-color: var(--red);
 }
 
 .game-container {
@@ -72,7 +80,7 @@ h2 {
   right: 0;
   padding: 15px;
   border-radius: 20px 20px 0px 0px;
-  background-color: #555;
+  background-color:   ;
   color: white;
   text-transform: uppercase;
   font-weight: bolder;
