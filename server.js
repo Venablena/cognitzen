@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
+const path = require('path');
 const axios = require('axios');
 const port = process.env.PORT || 5000;
+const app = express();
 const wixURL = 'https://www.cognitzen.com/_functions/user';
 
 app.use(bodyParser.json());
@@ -31,5 +32,14 @@ app.get('/users', (req, res) => {
       res.send({ err: "Couldn't fetch users from Wix API" });
     })
 });
+//FOR DEPLOYMENT
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  // Handle React routing, return all requests to React app
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
