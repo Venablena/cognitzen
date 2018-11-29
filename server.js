@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   const userEmail = req.params.userEmail;
 app.get('/users/:userEmail', (req, res) => {
   const userEmail = req.params.userEmail;
-
   axios.get(wixURL)
     .then((result) => {
       const users = result.data.items;
@@ -25,13 +24,13 @@ app.get('/users/:userEmail', (req, res) => {
     })
 });
 
-app.get('/users', (req, res) => {
-  axios.get(wixURL)
+app.post('/users', (req, res) => {
+  axios.post(wixURL, JSON.stringify(req.body))
     .then((result) => {
-      res.send(result.data.items)
+      res.send(result.data);
     })
     .catch((err) => {
-      res.send({ err: "Couldn't fetch users from Wix API" });
+      res.send({ err: "Couldn't create a new user for Wix API" });
     })
 });
 //FOR DEPLOYMENT

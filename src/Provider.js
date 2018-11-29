@@ -158,7 +158,6 @@ class Provider extends Component {
 
   componentWillMount = () => {
     //MAKE A WIX DB CALL TO GET THE surveyUser
-    console.log("mounted");
     this.fetchUser()
       .then(res => console.log(res))
       .catch(err => console.log(err));
