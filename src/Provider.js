@@ -148,9 +148,19 @@ class Provider extends Component {
     return [];
   }
 
+  fetchUser = async (userEmail) => {
+    // const response = await fetch(`/users/:${ userEmail }`);
+    const response = await fetch(`/users`);
+    const body = await response.json();
+    if ( response.status !== 200) throw Error( body.message );
+    return body;
+  };
+
   componentWillMount = () => {
     //MAKE A WIX DB CALL TO GET THE surveyUser
-
+    this.fetchUser()
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
     //IF USER, surveyUser = USER
     let { unsolvedArgIds, args } = this.state;
     const solvedArgIds = this.getSolvedIds();
