@@ -9,6 +9,8 @@ const wixURL = 'https://www.cognitzen.com/_functions/user';
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// app.get('/users/:userEmail', (req, res) => {
+//   const userEmail = req.params.userEmail;
 app.get('/users/:userEmail', (req, res) => {
   const userEmail = req.params.userEmail;
 
