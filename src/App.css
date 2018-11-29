@@ -18,6 +18,7 @@
    --yellow: #fac936;
    --purple: #d9cceb;
    --black: #10021f;
+   --darkGrey: #555;
  }
 
 h2 {
@@ -80,7 +81,7 @@ h2 {
   right: 0;
   padding: 15px;
   border-radius: 20px 20px 0px 0px;
-  background-color:   ;
+  background-color: var(--darkGrey);
   color: white;
   text-transform: uppercase;
   font-weight: bolder;
