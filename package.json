@@ -20,7 +20,7 @@
     "client": "react-scripts start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build && react-scripts start"
+    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "proxy": "http://localhost:5000/",
   "eslintConfig": {
