@@ -24,6 +24,17 @@ app.get('/users/:userEmail', (req, res) => {
     })
 });
 
+app.get('/users', (req, res) => {
+  axios.get(wixURL)
+    .then((result) => {
+      const users = result.data.items;
+      res.send(users);
+    })
+    .catch((err) => {
+      res.send({ err: "Couldn't fetch users from Wix API" });
+    })
+});
+
 app.post('/users', (req, res) => {
   axios.post(wixURL, JSON.stringify(req.body))
     .then((result) => {
