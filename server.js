@@ -6,6 +6,8 @@ const port = process.env.PORT || 5000;
 const app = express();
 const wixURL = 'https://www.cognitzen.com/_functions/user';
 
+const _localStorage = require("localstorage-ponyfill");
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

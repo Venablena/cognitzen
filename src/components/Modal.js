@@ -15,11 +15,6 @@ class Modal extends Component {
           if(showModal) {
             return ReactDOM.createPortal (
               <main className={`modal`}>
-                <button
-                  className='button-close'
-                  onClick={handleModalClose}>
-                  &times;
-                </button>
                 <iframe
                   src="https://docs.google.com/forms/d/e/1FAIpQLSfnnfAmdrjmlMkb2FZM3KHBEfm8UGLIfLuaSznI96xOD0dYjA/viewform?embedded=true"
                   width="100%"
@@ -28,6 +23,22 @@ class Modal extends Component {
                   marginHeight="0" marginWidth="0">
                   Loading...
                 </iframe>
+                <form className='survey-form'>
+                  <label>
+                    Your email :
+                    <input
+                      type="text"
+                      name="email"
+                      placeholder="email is required"
+                      required
+                    />
+                  </label>
+                  <button
+                    className='button-close'
+                    onClick={handleModalClose}>
+                    &times;
+                  </button>
+                </form>
               </main> ,
               modalRoot,
             )

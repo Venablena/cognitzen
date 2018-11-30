@@ -149,7 +149,6 @@ class Provider extends Component {
     } = this.state;
     //Remove the solved arg from the unsolved args...
     let updatedUnsolvedArgs = difference(unsolvedArgIds, currentArgId);
-    //console.log(updatedUnsolvedArgs.length);
     //...and if there are unsolved args left
     if(updatedUnsolvedArgs.length) {
       //add the solved arg to localStorage...
