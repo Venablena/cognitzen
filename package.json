@@ -19,7 +19,7 @@
     "eject": "react-scripts eject",
     "client": "react-scripts start",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "proxy": "http://localhost:5000/",
   "eslintConfig": {
