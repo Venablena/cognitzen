@@ -149,8 +149,6 @@ class Provider extends Component {
   }
 
   componentWillMount = () => {
-    //MAKE A WIX DB CALL TO GET THE surveyUser
-    //IF USER, surveyUser = USER
     let { unsolvedArgIds, args } = this.state;
     const solvedArgIds = this.getSolvedIds();
     if(solvedArgIds.length) unsolvedArgIds = difference(unsolvedArgIds, solvedArgIds);
@@ -159,7 +157,6 @@ class Provider extends Component {
       ...this.state,
       ...this.getRandomArg(unsolvedArgIds, args),
       unsolvedArgIds,
-      //surveyUser
     })
   };
 
@@ -171,7 +168,10 @@ class Provider extends Component {
           return this.showAlert();
         }, 300)
       }
-      if( (surveyCount >= 5 ) && (surveyCount % 5 === 0 )) {
+      if(
+        (surveyCount === 10 ) || 
+        (surveyCount === 25 ) ||
+        (surveyCount === 50) ) {
         this.openSurvey()
       }
     }
