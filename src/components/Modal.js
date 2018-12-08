@@ -23,7 +23,10 @@ class Modal extends Component {
                   marginHeight="0" marginWidth="0">
                   Loading...
                 </iframe>
-                <form className='survey-form'>
+                <form
+                  className='survey-form'
+                  onSubmit={handleModalClose}>
+                >
                   <label>
                     Your email :
                     <input
@@ -34,8 +37,9 @@ class Modal extends Component {
                     />
                   </label>
                   <button
+                    type='submit'
                     className='button-close'
-                    onClick={handleModalClose}>
+                  >
                     &times;
                   </button>
                 </form>
