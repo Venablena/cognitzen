@@ -79,10 +79,6 @@ class Provider extends Component {
   };
 
   getRandomArg = (unsolvedArgs, allArgs) => {
-    //WHY DO I NEED TO PASS THE PARAMETERS HERE?
-    //IF I GET THESE FROM THE STATE INSIDE GETRANDOMARG,
-    //THEY ARE STALE
-    //const { unsolvedArgIds, args } = this.state;
     const randomIdx = Math.floor(Math.random() * unsolvedArgs.length);
     const id = unsolvedArgs[randomIdx];
     const currentArg = allArgs[id]
@@ -108,7 +104,7 @@ class Provider extends Component {
         JSON.stringify(solvedArgs)
       );
       if(round === "2") {
-        //make it visible in the contention review
+        // // TODO: make it visible in the contention review
       }
     } else {
       if(round === "1") {
@@ -116,14 +112,13 @@ class Provider extends Component {
         updatedUnsolvedArgs = this.props.unsolvedArgIds;
       }
       if(round === "2") {
-      //   //add contention to localStorage
-      //   //make it visible in the round2 container
+      // // TODO: add contention to localStorage
+      // //make it visible in the round2 container
       }
     }
     return this.resetStateForNextArg(updatedUnsolvedArgs);
   }
 
-// TODO: SHOULD 2nd round ARGS SHUFFLE OR NOT?
   openSurvey = () => {
     this.setState({
       ...this.state,
@@ -168,10 +163,7 @@ class Provider extends Component {
           return this.showAlert();
         }, 300)
       }
-      if(
-        (surveyCount === 10 ) || 
-        (surveyCount === 25 ) ||
-        (surveyCount === 50) ) {
+      if( (surveyCount === 10 ) || (surveyCount === 25 ) || (surveyCount === 50) ) {
         this.openSurvey()
       }
     }

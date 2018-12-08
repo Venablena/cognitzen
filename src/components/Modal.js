@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Provider, { GameContext } from '../Provider';
+import { GameContext } from '../Provider';
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -21,6 +21,7 @@ class Modal extends Component {
                   &times;
                 </button>
                 <iframe
+                  title="modal iFrame"
                   src="https://docs.google.com/forms/d/e/1FAIpQLSfnnfAmdrjmlMkb2FZM3KHBEfm8UGLIfLuaSznI96xOD0dYjA/viewform?embedded=true"
                   width="100%"
                   height="90%"
