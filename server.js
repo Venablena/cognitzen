@@ -11,8 +11,7 @@ const _localStorage = require("localstorage-ponyfill");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.get('/users/:userEmail', (req, res) => {
-//   const userEmail = req.params.userEmail;
+//NOT IN USE CURRENTLY
 app.get('/users/:userEmail', (req, res) => {
   const userEmail = req.params.userEmail;
   axios.get(wixURL)
@@ -46,6 +45,7 @@ app.post('/users', (req, res) => {
       res.send({ err: "Couldn't create a new user for Wix API" });
     })
 });
+
 //FOR DEPLOYMENT
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
