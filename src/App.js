@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Provider from './Provider';
 import Game from './components/Game';
-import Round2 from './components/Round2';
 import Modal from './components/Modal';
 import Data1 from './data-1.json';
 import './App.css';
