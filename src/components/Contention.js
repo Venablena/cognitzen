@@ -1,10 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 class Contention extends Component {
-  // state = {
-  //   isComplete: false,
-  // }
-  //
   render(){
     const {
       title,
