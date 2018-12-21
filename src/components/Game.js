@@ -53,6 +53,7 @@ class Game extends Component {
   };
 
   handleDrop = (e, content, type, logCorrectAnswer) => {
+    e.preventDefault();
     const qualifierContent = e.dataTransfer.getData("content");
     const suggestionType = e.dataTransfer.getData("type");
     if(suggestionType === type) return logCorrectAnswer(qualifierContent, suggestionType);
