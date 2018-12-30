@@ -4,20 +4,21 @@ class Site extends Component {
  render () {
    return (
      <main className='Site-wrapper'>
-      // <div className='Site-header'>
+      <div className='Site-header'>
+       <img
+          alt='cognitzen logo'
+          src='cognitzenlogo.png'
+          className='logo'
+        />
         <a
           href='https://www.cognitzen.com/game'
           className='back-link'
-        >
-          &#12296;
-          back
+        >&#8617;
+        <div>
+          Back
+        </div>
         </a>
-       <img
-        alt='cognitzen logo'
-        src='cognitzenlogo.png'
-        className='logo'
-      />
-      // </div>
+      </div>
        { this.props.children }
      </main>
    );
