@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { GameContext } from './Provider';
 
 class Consumer extends Component {
-
   render() {
-    const { children } = this.props;
-
     return (
       <GameContext.Consumer>
         {({
@@ -28,7 +25,6 @@ class Consumer extends Component {
       </GameContext.Consumer>
     );
   }
-
 }
 
 export default Consumer;

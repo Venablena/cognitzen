@@ -21,6 +21,11 @@
    --darkGrey: #555;
  }
 
+ a {
+   text-decoration: none;
+   text-color: initial;
+ }
+
 h2 {
   margin: 0;
 }
@@ -36,6 +41,30 @@ h2 {
   background-image: linear-gradient(var(--red), var(--yellow));
   background-color: black;
 }
+
+.Site-wrapper {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.back-link {
+  color: white;
+  position: absolute;
+  left: 50px;
+  top: 50px;
+}
+
+/* .site-header {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.Site-header > a {
+  align-self: flex-start;
+} */
 
 .arguments-container,
 .qualifiers-container {
@@ -108,6 +137,11 @@ h2 {
 
 .is-hidden {
   display: none;
+}
+
+.logo {
+  width: 110px;
+  height: auto;
 }
 
 @keyframes shake {
